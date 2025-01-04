@@ -20,6 +20,9 @@ Conditional GANs are an extension of GANs where both the generator and discrimin
 - numpy
 - matplotlib
 
+![Generated Samples at Epoch 10, Step 4500](generated_images/epoch_10_step_4500)
+- matplotlib
+
 ## Installation
 
 Clone this repository and install the required dependencies:
