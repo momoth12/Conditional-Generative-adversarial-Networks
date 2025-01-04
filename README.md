@@ -26,7 +26,7 @@ Conditional GANs are an extension of GANs where both the generator and discrimin
 Clone this repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/yourusername/Conditional-Generative-adversarial-Networks.git
+git clone https://github.com/momoth12/Conditional-Generative-adversarial-Networks
 cd Conditional-Generative-adversarial-Networks
 pip install -r requirements.txt
 ```
