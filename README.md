@@ -10,7 +10,7 @@ Conditional GANs are an extension of GANs where both the generator and discrimin
 
 - Implementation of cGAN using PyTorch
 - Training and evaluation scripts
-- Example usage with MNIST dataset
+- Example usage with Fashion MNIST dataset
 
 ## Requirements
 
@@ -35,11 +35,16 @@ pip install -r requirements.txt
 
 ### Training & Evaluation
 
-To train the cGAN model, run the following command:
+To train the cGAN model on Fashion MNIST dataset , run by default the following command:
 
 ```bash
 python train.py 
 ```
+I made the pipeline usable for MNIST dataset. USe  
+```bash
+python train.py --dataset MNIST
+```
+The plot of the loss and the results are available in the `generated_images` and `loss_plots` directory.
 
 
 

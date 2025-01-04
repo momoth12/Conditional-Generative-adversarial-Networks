@@ -1,13 +1,21 @@
+#######################################################################
+###############################  IMPORTS ##############################
+#######################################################################
 import torch
 import os
 import matplotlib.pyplot as plt
 from torch import nn
 from tqdm.auto import tqdm
-from datasets import MNISTDataModule
+
+from datasets import * 
 from models import *
 from utils import *
+import argparse
 
-# Setup
+#######################################################################
+###############################  SETUP ################################
+#######################################################################
+
 z_dim = 64
 mnist_shape = (1, 28, 28)
 n_classes = 10
@@ -16,10 +24,29 @@ batch_size = 128
 n_epochs = 15
 device = "cuda" if torch.cuda.is_available() else "cpu"
 display_step = 500
+#######################################################################
+############################### DATASET LOADING #######################
+#######################################################################
+parser = argparse.ArgumentParser(description="Conditional GAN Training")
+parser.add_argument('--dataset', type=str, choices=['MNIST', 'FashionMNIST'], default='FashionMNIST',
+                    help="Dataset to use: 'MNIST' or 'FashionMNIST'")
+args = parser.parse_args()
+
+# Dataset selection
+if args.dataset == 'MNIST':
+    data_module = MNISTDataModule(batch_size=batch_size)
+    print("Using MNIST dataset.")
+else:
+    data_module = FashionMNISTDataModule(batch_size=batch_size)
+    print("Using FashionMNIST dataset.")
+
 
 # Initialize data
-data_module = MNISTDataModule(batch_size)
 train_loader = data_module.train_dataloader()
+
+#######################################################################
+############################### INITIALIZATION ########################
+#######################################################################
 
 # Calculate input dimensions
 generator_input_dim, discriminator_image_channel = calculate_input_dim(z_dim, mnist_shape, n_classes)
@@ -36,8 +63,9 @@ discriminator.apply(weights_init)
 criterion = nn.BCEWithLogitsLoss()
 gen_optimizer = torch.optim.Adam(generator.parameters(), lr=lr)
 disc_optimizer = torch.optim.Adam(discriminator.parameters(), lr=lr)
-
-# Training loop
+#######################################################################
+############################### TRAINING LOOP #########################
+#######################################################################
 cur_step = 0
 generator_losses = []
 discriminator_losses = []
@@ -104,7 +132,9 @@ for epoch in range(n_epochs):
 
     print(f"Epoch {epoch + 1}/{n_epochs} completed.")
 
-# Final loss plot
+#######################################################################
+############################### PLOTTING ##############################
+#######################################################################
 loss_plot_dir = "loss_plots"
 os.makedirs(loss_plot_dir, exist_ok=True)
 plt.figure(figsize=(10, 5))
