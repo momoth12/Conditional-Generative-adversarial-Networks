@@ -49,5 +49,5 @@ class Discriminator(nn.Module):
             return nn.Sequential(nn.Conv2d(input_channels, output_channels, kernel_size, stride))
 
     def forward(self, image):
-        disc_pred = self.disc(image)
-        return disc_pred.view(len(disc_pred), -1)
+        pred = self.disc(image)
+        return pred.view(len(pred), -1)

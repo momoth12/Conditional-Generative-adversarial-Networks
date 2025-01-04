@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from torch import nn
 from tqdm.auto import tqdm
 from datasets import MNISTDataModule
-from models import Generator, Discriminator
+from models import *
 from utils import *
 
 # Setup
@@ -13,7 +13,7 @@ mnist_shape = (1, 28, 28)
 n_classes = 10
 lr = 0.0002
 batch_size = 128
-n_epochs = 10
+n_epochs = 15
 device = "cuda" if torch.cuda.is_available() else "cpu"
 display_step = 500
 
@@ -97,7 +97,7 @@ for epoch in range(n_epochs):
             print(f" Step {cur_step}: Gen loss: {gen_loss:.4f} | Disc loss: {disc_loss:.4f}")
 
             # Plot real and fake images in 5x5 grid
-            #plot_images_grid(real, fake_images)
+            #plot_images_grid(real, fake_images)   uncomment to plot the generated image at each step
             filename = os.path.join(savedir, f"epoch_{epoch+1}_step_{cur_step}.png")
             save_images_grid(real, fake_images, filename)
         cur_step += 1
